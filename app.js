@@ -6,52 +6,82 @@ const rl = readline.createInterface({
     output: process.stdout
     });
 
-const form = ['Rock', 'Paper', 'Scissor'];
-//const form = ['Rock', 'Paper', 'Scissor', 'Lizard', 'Spock']
+var form = ['Rock', 'Paper', 'Scissor'];
 
 //New game init begin here
 console.log(chalk.green(figlet
     .textSync("Welcome to Rock Paper Scissors!", {horizontalLayout: 'half'})));
 
 // rl.question('With Spock (y/n)? ', (ans) => {
-//     var spock = ans;
-//     var numChoice = 5;
+//     var spock = (ans == "y") ? true : false;
+//     var numChoice = (ans == "y") ? 5 : 3;
+//     rl.close();
 // });
-var spock = "N"; //set for no spock
+var spock = false; //set for no spock
 var numChoice = 3;
 
 choiceInput = (ifspock) => { //inform user of the choice avaliable
     console.log(chalk.yellow("Enter your numeric choice of form!"));
-    console.log("1. ", form[0]);
-    console.log("2. ", form[1]);
-    console.log("3. ", form[2]);
-    if(ifspock == "Y"){
-        console.log("4. ", form[3]);
-        console.log("5. ", form[4]);
+    if(ifspock){//for extension into lizard spock
+        form = ['Rock', 'Paper', 'Scissor', 'Lizard', 'Spock']; 
+        numChoice = 5;
+        for(let i = 0; i < numChoice; i++){
+            console.log(i+1+". ", form[i]);
+        }
+    }else {//normal game no spock
+        for(let i = 0; i < numChoice; i++){
+            console.log(i+1+". ", form[i]);
+        }
     }
     console.log("q. ", "Quit");
 }
 
-randomNum = () => {
-
+randomGen = (max) => { //simple random number generator
+    // console.log(max);
+    return Math.floor(Math.random() * max);
 }
 
 gamePlay = () => { // main game logic
-    choiceInput(this.spock);
-    rl.question('Your choice? ', (answer) => {
+    choiceInput(spock);
+    rl.question('Your choice? ', (ans) => {
         // TDD can you register a choice
-        //console.log(answer)
-        if (answer = "q"){
+        // console.log(numChoice);
+        var answer = Number.parseInt(ans) -1;
+        var randomNum = randomGen(numChoice);
+        // console.log("answer: " + answer + " "+ typeof(answer) +" random: " + randomNum + " " + typeof(randomNum));
+        if (ans.toLowerCase() == "q"){ //quit game
             console.log(chalk.green("Thanks for playing! Good bye!"));
             rl.close();
+            return;
+        }else if (answer == randomNum) {
+            console.log("\n" + form[answer] + " vs " + form[randomNum] + " it is a draw!" + "\n");
+
+        }else if (answer == 0 && randomNum == 2) {
+            console.log(chalk.green("\n" + form[answer] + " destroy " + form[randomNum] + " you win!!" + "\n"));
+
+        }else if (answer == 0 && randomNum == 1) {
+            console.log(chalk.red("\n" + form[randomNum] + " smolder " + form[answer] + " you lose.." + "\n"));
+
+        }else if (answer == 1 && randomNum == 0) {
+            console.log(chalk.green("\n" + form[answer] + " smolder " + form[randomNum] + " you win!!" + "\n"));
+
+        }else if (answer == 1 && randomNum == 2) {
+            console.log(chalk.red("\n" + form[randomNum] + " cuts " + form[answer] + " you lose.." + "\n"));
+
+        }else if (answer == 2 && randomNum == 1) {
+            console.log(chalk.green("\n" + form[answer] + " cut " + form[randomNum] + " you win!!" + "\n"));
+
+        }else if (answer == 2 && randomNum == 0) {
+            console.log(chalk.red("\n" + form[randomNum] + " smash " + form[answer] + " you lose.." + "\n"));
+            
+        }else { //error input comment
+            console.log("Incorrect input." + "\n");
         }
+        gamePlay(); //recursive 
     });
     
 }
-
-
-
-
+//ps. used some coloring on font as output become gibberish very quickly after playing afew games
 gamePlay();
 
 
