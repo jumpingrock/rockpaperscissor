@@ -34,10 +34,11 @@ choiceInput = (ifspock) => { //inform user of the choice avaliable
         }
     }
     console.log("q. ", "Quit");
+    return form;
 }
 
 randomGen = (max) => { //simple random number generator
-    // console.log(max);
+
     return Math.floor(Math.random() * max);
 }
 
@@ -84,7 +85,8 @@ gamePlay = () => { // main game logic
 //ps. used some coloring on font as output become gibberish very quickly after playing afew games
 gamePlay();
 
-
+exports.choiceInput = choiceInput;
+exports.randomGen = randomGen;
 
 
 
