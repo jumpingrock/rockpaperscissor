@@ -21,12 +21,11 @@ choiceInput = (ifspock) => { //inform user of the choice avaliable
     console.log(chalk.yellow("Enter your numeric choice of form!"));
     if(!ifspock){//normal game
         form = ['Rock', 'Paper', 'Scissor'];
-        numChoice = form.length;
     }
     else {//spock game
-        form = ['Rock', 'Paper', 'Scissor', 'Lizard', 'Spock']; 
-        numChoice = form.length;
+        form = ['Rock', 'Paper', 'Scissor', 'Lizard', 'Spock'];  
     }
+    numChoice = form.length;
     for(let i = 0; i < numChoice; i++){
         console.log(i+1+". ", form[i]);
     }
@@ -34,10 +33,7 @@ choiceInput = (ifspock) => { //inform user of the choice avaliable
     return form;
 }
 
-randomGen = (max) => { //simple random number generator
-
-    return Math.floor(Math.random() * max);
-}
+randomGen = (max) => Math.floor(Math.random() * max);
 
 winCondition = (player, comp) => {
     
@@ -78,12 +74,12 @@ gamePlay = () => { // main game logic
         }else if (answer == randomNum) {
             console.log("\n" + form[answer] + " vs " + form[randomNum] + " it is a draw!" + "\n");
         
-        }else if (typeof(answer) == 'number' && answer !== randomNum) {
+        }else if (typeof(answer) == 'number') {
             var conditionReply = winCondition(answer,randomNum);
-            console.log(conditionReply);
+            console.log("\n" + conditionReply + "\n");
 
         }else { //error input comment
-            console.log("Incorrect input." + "\n");
+            console.log("\n" + "Incorrect input." + "\n");
         }
         rl.close();
         // gamePlay(); //recursive 
@@ -93,7 +89,6 @@ gamePlay = () => { // main game logic
 //ps. used some coloring on font as output become gibberish very quickly after playing afew games
 
 gamePlay();
-
 
 exports.choiceInput = choiceInput;
 exports.randomGen = randomGen;
