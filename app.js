@@ -1,12 +1,13 @@
 const chalk = require('chalk');
 const figlet = require('figlet');
 const readline = require('readline');
+const {winCondition} = require('./gamelogic');
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
     });
 
-var spock = false; //set for no spock
+var spock = true; //set for no spock
 var numChoice;
 var form;
 
@@ -35,29 +36,6 @@ choiceInput = (ifspock) => { //inform user of the choice avaliable
 
 randomGen = (max) => Math.floor(Math.random() * max);
 
-winCondition = (player, comp) => {
-    
-    if (player == 0 && comp == 2) {
-        return chalk.green(form[player] + " destroy " + form[comp] + " you win!!");
-
-    }else if (player == 0 && comp == 1) {
-        return chalk.red(form[comp] + " smolder " + form[player] + " you lose..");
-
-    }else if (player == 1 && comp == 0) {
-        return chalk.green(form[player] + " smolder " + form[comp] + " you win!!");
-
-    }else if (player == 1 && comp == 2) {
-        return chalk.red(form[comp] + " cuts " + form[player] + " you lose..");
-
-    }else if (player == 2 && comp == 1) {
-        return chalk.green(form[player] + " cuts " + form[comp] + " you win!!")
-
-    }else if (player == 2 && comp == 0) {
-        return chalk.red(form[comp] + " destroy " + form[player] + " you lose..")
-
-    }
-}
-
 gamePlay = () => { // main game logic
     console.log(chalk.green(figlet
         .textSync("Welcome to Rock Paper Scissors!", {horizontalLayout: 'half'})));
@@ -66,16 +44,17 @@ gamePlay = () => { // main game logic
 
         var answer = Number.parseInt(ans) -1;
         var randomNum = randomGen(numChoice);
-
+        
         if (ans.toLowerCase() == "q"){ //quit game
             console.log(chalk.green("Thanks for playing! Good bye!"));
+            rl.close();
             return;
 
         }else if (answer == randomNum) {
             console.log("\n" + form[answer] + " vs " + form[randomNum] + " it is a draw!" + "\n");
         
-        }else if (typeof(answer) == 'number') {
-            var conditionReply = winCondition(answer,randomNum);
+        }else if (typeof(answer) == 'number' && answer <= form.length) {
+            var conditionReply = winCondition(answer,randomNum, form);
             console.log("\n" + conditionReply + "\n");
 
         }else { //error input comment
@@ -93,4 +72,3 @@ gamePlay();
 exports.choiceInput = choiceInput;
 exports.randomGen = randomGen;
 exports.gamePlay = gamePlay;
-exports.winCondition = winCondition;
