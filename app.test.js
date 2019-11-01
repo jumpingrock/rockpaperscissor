@@ -25,7 +25,7 @@ test ('output should NOT contain spock and lizard if FALSE is inputted', () => {
 
 });
 
-test ('winCondition test', () => {
+test ('winCondition test without spock', () => {
     let form = ['Rock', 'Paper', 'Scissor'];
 
     const test = winCondition(0, 2, form);
@@ -45,6 +45,9 @@ test ('winCondition test', () => {
 
     const test5 = winCondition(2, 0, form);
     expect(test5).toMatch("Rock crush Scissor you lose..");
+
+    const test6 = winCondition(0, 0, form);
+    expect(test6).toMatch("Rock vs Rock it is a draw!");
     
 });
 
@@ -68,5 +71,8 @@ test ('winCondition test with spock', () => {
 
     const test5 = winCondition(3, 2, form);
     expect(test5).toMatch("Scissor cuts Lizard you lose..");
+
+    const test6 = winCondition(4, 4, form);
+    expect(test6).toMatch("Spock vs Spock it is a draw!");
     
 });

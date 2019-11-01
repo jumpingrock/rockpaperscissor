@@ -13,7 +13,10 @@ winCondition = (player, comp, form) => {
     let playerForm = form[player];
     let compForm = form[comp];
 
-    if (formDetails[playerForm].win == compForm || formDetails[playerForm].extWin == compForm) {
+    if (playerForm == compForm) { //draw
+        return  form[player] + " vs " + form[comp] + " it is a draw!";
+    
+    }else if (formDetails[playerForm].win == compForm || formDetails[playerForm].extWin == compForm) {
         return chalk.green(form[player] + " " + formDetails[playerForm].winVocab + " " + form[comp]+ " you win!!");
 
     }else if (formDetails[compForm].win == playerForm || formDetails[compForm].extWin == playerForm) {
@@ -21,7 +24,6 @@ winCondition = (player, comp, form) => {
 
     }
     
-
 }
 
 exports.winCondition = winCondition;

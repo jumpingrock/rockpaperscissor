@@ -11,13 +11,6 @@ var spock = true; //set for no spock
 var numChoice;
 var form;
 
-//New game init begin here
-// rl.question('With Spock (y/n)? ', (ans) => {
-//     var spock = (ans == "y") ? true : false;
-//     var numChoice = (ans == "y") ? 5 : 3;
-//     rl.close();
-// });
-
 choiceInput = (ifspock) => { //inform user of the choice avaliable
     console.log(chalk.yellow("Enter your numeric choice of form!"));
     if(!ifspock){//normal game
@@ -45,17 +38,14 @@ gamePlay = () => { // main game logic
         var answer = Number.parseInt(ans) -1;
         var randomNum = randomGen(numChoice);
         
-        if (ans.toLowerCase() == "q"){ //quit game
+        if (typeof(answer) == 'number' && answer <= form.length) { //logic stored in gamelogic.js
+            var conditionReply = winCondition(answer,randomNum, form);
+            console.log("\n" + conditionReply + "\n");
+        
+        }else if (ans.toLowerCase() == "q"){ //quit game
             console.log(chalk.green("Thanks for playing! Good bye!"));
             rl.close();
             return;
-
-        }else if (answer == randomNum) {
-            console.log("\n" + form[answer] + " vs " + form[randomNum] + " it is a draw!" + "\n");
-        
-        }else if (typeof(answer) == 'number' && answer <= form.length) {
-            var conditionReply = winCondition(answer,randomNum, form);
-            console.log("\n" + conditionReply + "\n");
 
         }else { //error input comment
             console.log("\n" + "Incorrect input." + "\n");
